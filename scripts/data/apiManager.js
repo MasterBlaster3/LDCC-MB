@@ -71,3 +71,18 @@ export const getSingleSnack = (snackId) => {
 	return fetch(`${apiURL}/snacks/${snackId}?_expand=season&_expand=shape&_expand=inFlavor&_expand=type`)
 	.then(response => response.json())
 }
+
+export const getSingleSnackToppings = (snackId) => {
+	return fetch(`${apiURL}/snackToppings?_expand=topping`)
+	.then(response => response.json())
+	.then(snackToppingsArray =>{snackToppingsArray.filter(singleSnack => {
+		if(singleSnack.snackId === snackId) {
+			document.querySelector("#detailToppings").innerHTML+= `${singleSnack.topping.name},
+			 `}
+			
+	})})	
+	.then(response => {
+		response.replace(/^,|,$/g, "")
+	})
+	
+}
